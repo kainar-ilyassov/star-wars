@@ -1,7 +1,7 @@
 import {render} from "react-dom";
-import './index.scss'
+import {App} from "./App";
 
 render(
-    <div className="check-scss">Hello React</div>,
+    <App/>,
     document.getElementById('root')
 )
