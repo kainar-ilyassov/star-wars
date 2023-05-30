@@ -11,7 +11,10 @@ export function buildLoaders({isDev}: BuildOptions): RuleSetRule[] {
     const cssLoader = {
             test: /\.s[ac]ss$/i,
             use: [
-                isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
+                isDev ? {
+                    loader: 'style-loader',
+                    options: { insert: 'body'}
+                } : MiniCssExtractPlugin.loader,
                 {
                     loader: "css-loader",
                     options: {
