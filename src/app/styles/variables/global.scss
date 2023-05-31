@@ -2,20 +2,22 @@
     --font-family-main: 'Times New Roman',  sans-serif;
 
     // --------Font Sizes Start--------//
+
     --font-size-small: 16px;
     --font-line-small: 24px;
     --font-small: var(--font-size-small) / var(--font-line-small) var(--font-family-main);
-
     --font-size-medium: 24px;
     --font-line-medium: 32px;
     --font-medium: var(--font-size-medium) / var(--font-line-medium) var(--font-family-main);
-
     --font-size-large: 32px;
     --font-line-large: 40px;
     --font-large: var(--font-size-large) / var(--font-line-large) var(--font-family-main);
+
     // --------Font Sizes End----------//
 
     // --------Heights Start----------//
+
     --navbar-height: 50px;
+
     // --------Heights End-----------//
 }
