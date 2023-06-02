@@ -1,8 +1,12 @@
 import { type ReactElement } from 'react'
+import { Counter } from 'entities/Counter'
 
 const MainPage = (): ReactElement => {
   return (
-        <div>Main page</div>
+    <div>
+      Main Page
+      <Counter/>
+    </div>
   )
 }
 
