@@ -16,7 +16,7 @@ interface CustomLinkProps extends LinkProps {
 
 export const CustomLink: FC<CustomLinkProps> = (props) => {
   const {
-    className = '',
+    className,
     children,
     theme = CustomLinkTheme.PRIMARY,
     to,

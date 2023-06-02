@@ -9,7 +9,7 @@ interface CounterProps {
   className?: string
 }
 
-export const Counter: FC<CounterProps> = ({ className = '' }) => {
+export const Counter: FC<CounterProps> = ({ className }) => {
   const dispatch = useDispatch()
   const countValue = useSelector(getCounterValue)
 

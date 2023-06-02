@@ -16,10 +16,10 @@ export function componentRender (component: ReactNode, options: componentRenderO
   } = options
 
   return render(
-    <StoreProvider initialState={initialState as StateSchema}>
-      <MemoryRouter initialEntries={[route]}>
+    <MemoryRouter initialEntries={[route]}>
+      <StoreProvider initialState={initialState as StateSchema}>
         {component}
-      </MemoryRouter>
-    </StoreProvider>
+      </StoreProvider>
+    </MemoryRouter>
   )
 }

@@ -8,7 +8,7 @@ interface NavbarProps {
   className?: string
 }
 
-export const Navbar: FC<NavbarProps> = ({ className = '' }): ReactElement => {
+export const Navbar: FC<NavbarProps> = ({ className }): ReactElement => {
   return (
     <div className={classNames(cls.navbar, {}, [className])}>
       <ThemeSwitcher/>
