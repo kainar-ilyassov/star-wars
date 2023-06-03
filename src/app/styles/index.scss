@@ -1,12 +1,18 @@
-@import "reset";
 @import "variables/global";
 @import "themes/light";
 @import "themes/dark";
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 .app {
-    background: var(--bg-color);
-    min-height: 100vh;
     width: 100%;
+    min-width: 900px;
+    min-height: 100vh;
+    background: var(--bg-color);
 
     %common-border {
         border: 1px solid var(--border-color);
@@ -14,12 +20,20 @@
 
     .header {
         display: flex;
+        height: 100px;
+        vertical-align: center;
+        justify-content: space-between;
         align-items: center;
-        flex-direction: row;
-        padding-top: 20px;
         background: var(--header-bg-color);
 
-        @extend %common-border
+        @extend %common-border;
+
+        .title {
+            margin: 0;
+            display: flex;
+            font-size: 50px;
+            justify-content: center;
+        }
     }
 
     .content {

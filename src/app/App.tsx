@@ -7,7 +7,7 @@ import { ThemeSwitcher } from 'shared/ui/ThemeSwitcher'
 import './styles/index.scss'
 
 const { Header, Footer, Content } = Layout
-const { Title, Text } = Typography
+const { Text, Title } = Typography
 
 export const App = (): ReactElement => {
   const { appTheme } = useTheme()
@@ -17,14 +17,14 @@ export const App = (): ReactElement => {
       <Layout className={classNames('app', [appTheme])}>
         <Suspense fallback="">
           <Header className={classNames('header')}>
-            <Title>Star Wars</Title>
+            <Title className={classNames('title')} code={true}>Star Wars Characters</Title>
             <ThemeSwitcher/>
           </Header>
           <Content className={classNames('content')}>
             <AppRouter/>
           </Content>
           <Footer className={classNames('footer')}>
-            <Text>Copyright &#9400; 2023 Faraway</Text>
+            <Text code={true}>Copyright &#9400; 2023 Faraway</Text>
           </Footer>
         </Suspense>
       </Layout>
