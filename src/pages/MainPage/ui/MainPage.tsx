@@ -1,11 +1,14 @@
 import { type ReactElement } from 'react'
-import { Counter } from 'entities/Counter'
+import { Typography } from 'antd'
+
+const { Title } = Typography
 
 const MainPage = (): ReactElement => {
   return (
     <div>
-      Main Page
-      <Counter/>
+      <Title>
+        Main Page
+      </Title>
     </div>
   )
 }

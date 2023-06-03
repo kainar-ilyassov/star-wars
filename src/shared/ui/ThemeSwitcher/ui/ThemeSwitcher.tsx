@@ -1,24 +1,18 @@
-import { type FC } from 'react'
+import { type ReactElement } from 'react'
+import { Switch } from 'antd'
 import { Theme, useTheme } from 'app/providers/ThemeProvider'
 import { classNames } from 'shared/lib/classNames/classNames'
-import { Button, ThemeButton } from 'shared/ui/Button'
-import LightIcon from 'shared/assets/icons/light-theme.svg'
-import DarkIcon from 'shared/assets/icons/dark-theme.svg'
 import cls from './ThemeSwitcher.module.scss'
 
-interface ThemeSwitcherProps {
-  className?: string
-}
-
-export const ThemeSwitcher: FC<ThemeSwitcherProps> = ({ className }) => {
-  const { theme, toggleTheme } = useTheme()
+export const ThemeSwitcher = (): ReactElement => {
+  const { appTheme, toggleTheme } = useTheme()
   return (
-    <Button
-      theme={ThemeButton.CLEAR}
-      className={classNames(cls.themeSwitcher, {}, [className])}
-      onClick={toggleTheme}
-    >
-      {theme === Theme.LIGHT ? <LightIcon/> : <DarkIcon/>}
-    </Button>
+    <Switch
+      className={classNames(cls.themeSwitcher)}
+      onChange={toggleTheme}
+      checkedChildren={Theme.DARK}
+      unCheckedChildren={Theme.LIGHT}
+      checked={appTheme === Theme.DARK}
+    />
   )
 }

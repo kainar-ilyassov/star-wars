@@ -1,15 +1,8 @@
-import { classNames } from 'shared/lib/classNames/classNames'
-import cls from './NotFoundPage.module.scss'
-import { type FC } from 'react'
+import { Empty } from 'antd'
+import { type ReactElement } from 'react'
 
-interface NotFoundPageProps {
-  className?: string
-}
-
-export const NotFoundPage: FC<NotFoundPageProps> = ({ className }) => {
+export const NotFoundPage = (): ReactElement => {
   return (
-    <div className={classNames(cls.notFoundPage, {}, [className])}>
-      Page is not found
-    </div>
+    <Empty description="Page is not found"/>
   )
 }

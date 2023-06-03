@@ -9,7 +9,7 @@ export function buildLoaders ({ isDev }: BuildOptions): RuleSetRule[] {
     exclude: /node_modules/
   }
   const cssLoader = {
-    test: /\.s[ac]ss$/i,
+    test: /\.(sc|sa|c)ss$/i,
     use: [
       isDev
         ? {

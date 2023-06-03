@@ -1,20 +1,18 @@
-import { type FC } from 'react'
+import { type ReactElement } from 'react'
+import { Button, Typography } from 'antd'
 import { classNames } from 'shared/lib/classNames/classNames'
-import { Button } from 'shared/ui/Button'
 import cls from './PageError.module.scss'
 
-interface PageErrorProps {
-  className?: string
-}
+const { Text } = Typography
 
-export const PageError: FC<PageErrorProps> = ({ className }) => {
+export const PageError = (): ReactElement => {
   const reloadPage = (): void => {
     location.reload()
   }
   return (
-    <div className={classNames(cls.pageError, {}, [className])}>
-      <p className={classNames(cls.message)}>Something went wrong</p>
-      <Button className={classNames(cls.button)} onClick={reloadPage}>Refresh</Button>
+    <div className={classNames(cls.pageError)}>
+      <Text className={classNames(cls.text)} type="danger">Something went wrong, try again</Text>
+      <Button className={classNames(cls.button)} onClick={reloadPage} size="large">Refresh</Button>
     </div>
   )
 }

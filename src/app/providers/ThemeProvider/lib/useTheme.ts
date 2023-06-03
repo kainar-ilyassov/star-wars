@@ -3,20 +3,24 @@ import { LOCAL_STORAGE_THEME_KEY, Theme, ThemeContext } from 'app/providers/Them
 
 interface UseThemeResult {
   toggleTheme: () => void
-  theme: Theme
+  appTheme: Theme
+}
+
+const themes = {
+  [Theme.LIGHT]: Theme.DARK,
+  [Theme.DARK]: Theme.LIGHT
 }
 
 export function useTheme (): UseThemeResult {
-  const { theme, setTheme } = useContext(ThemeContext)
+  const { appTheme, setAppTheme } = useContext(ThemeContext)
 
   const toggleTheme = (): void => {
-    const newTheme = theme === Theme.LIGHT ? Theme.DARK : Theme.LIGHT
-    setTheme?.(newTheme)
-    localStorage.setItem(LOCAL_STORAGE_THEME_KEY, newTheme)
+    setAppTheme?.(themes[appTheme])
+    localStorage.setItem(LOCAL_STORAGE_THEME_KEY, themes[appTheme])
   }
 
   return {
-    theme,
+    appTheme,
     toggleTheme
   }
 }
