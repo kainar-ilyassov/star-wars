@@ -37,6 +37,7 @@
     }
 
     .content {
+        display: flex;
         padding: 50px;
 
         @extend %common-border

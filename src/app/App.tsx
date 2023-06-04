@@ -1,5 +1,5 @@
-import { type ReactElement, Suspense } from 'react'
-import { Watermark, Layout, Typography } from 'antd'
+import { type ReactElement, Suspense, useEffect } from 'react'
+import { Watermark, Layout, Typography, Space } from 'antd'
 import { AppRouter } from 'app/providers/router'
 import { useTheme } from './providers/ThemeProvider'
 import { classNames } from 'shared/lib/classNames/classNames'
@@ -24,7 +24,7 @@ export const App = (): ReactElement => {
             <AppRouter/>
           </Content>
           <Footer className={classNames('footer')}>
-            <Text code={true}>Copyright &#9400; 2023 Faraway</Text>
+            <Text code={true}>Copyright &#9400; 2023 @Kaicodeme</Text>
           </Footer>
         </Suspense>
       </Layout>
