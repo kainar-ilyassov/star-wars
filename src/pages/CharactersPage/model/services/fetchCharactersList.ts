@@ -4,7 +4,7 @@ import { type CharactersPageInfo } from 'pages/CharactersPage'
 
 export const fetchCharactersList = createAsyncThunk<
 CharactersPageInfo,
-string,
+number,
 ThunkConfig<string>
 >(
   'charactersPage/fetchCharactersList',

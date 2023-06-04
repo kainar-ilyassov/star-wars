@@ -1,8 +1,6 @@
 import { memo, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Card } from 'antd'
-import { classNames } from 'shared/lib/classNames/classNames'
-import cls from './CharactersListItem.module.scss'
 import { type Character } from 'entities/Character'
 import { RoutePath } from 'shared/config/routeConfig/routeConfig'
 
@@ -24,8 +22,8 @@ export const CharactersListItem = memo(({ character, characterId }: CharactersLi
   return (
     <Card
       onClick={onOpenCharacter}
-      className={classNames(cls.characterItem)}
       hoverable
+      style={{ width: '200px' }}
       cover={
         <img
           alt={`${character.name} photo`}
