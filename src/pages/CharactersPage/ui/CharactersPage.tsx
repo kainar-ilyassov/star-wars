@@ -42,27 +42,29 @@ const CharactersPage: FC<CharactersPageProps> = ({ className }) => {
     return (<PageError/>)
   }
 
-  if (isLoading) {
-    return <PageLoader/>
-  }
-
   return (
     <div className={classNames(cls.charactersPage, [className])}>
-      <Search
-        className={classNames(cls.searchInput)}
-        size="large"
-        placeholder="search character"
-        enterButton="Search"
-        autoFocus
-      />
-      <CharactersList characters={characters}/>
-      <Pagination
-        current={currentPage}
-        onChange={onChangePage}
-        total={totalCharacters}
-        showSizeChanger={false}
-        className={classNames(cls.pagination)}
-      />
+      {isLoading
+        ? <PageLoader/>
+        : (
+          <>
+            <Search
+              className={classNames(cls.searchInput)}
+              size="large"
+              placeholder="search character"
+              enterButton="Search"
+              autoFocus
+            />
+            <CharactersList characters={characters}/>
+            <Pagination
+              current={currentPage}
+              onChange={onChangePage}
+              total={totalCharacters}
+              showSizeChanger={false}
+              className={classNames(cls.pagination)}
+            />
+          </>
+          )}
     </div>
   )
 }
