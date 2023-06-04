@@ -13,6 +13,7 @@ export function createReduxStore (initialState?: StateSchema): EnhancedStore<Sta
     devTools: _IS_DEV_,
     preloadedState: initialState,
     middleware: getDefaultMiddleware => getDefaultMiddleware({
+      serializableCheck: false,
       thunk: {
         extraArgument: {
           api: $api

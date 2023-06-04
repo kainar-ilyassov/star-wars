@@ -1,0 +1,28 @@
+.characterDetails {
+    width: auto;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 40px;
+    margin: 0 auto;
+    background-color: #7a7a7a;
+}
+
+.characterInfo {
+    display: flex;
+    align-items: center;
+}
+
+
+.infoWrapper {
+    display: flex;
+    justify-content: flex-start;
+    gap: 40px;
+}
+
+.actionButtons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}

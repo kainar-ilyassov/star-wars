@@ -1,5 +1,8 @@
 .characterDetailsPage {
     width: 100%;
+    padding: 20px;
     display: flex;
-    background-color: blueviolet;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--page-bg-color);
 }

@@ -2,6 +2,7 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import { fetchCharacterById } from '../services/fetchCharacterById'
 import { type Character } from '../types/character'
 import { type CharacterDetailsSchema } from 'entities/Character'
+import { type ChangeEvent } from 'react'
 
 const initialState: CharacterDetailsSchema = {
   isLoading: false,
@@ -12,7 +13,18 @@ const initialState: CharacterDetailsSchema = {
 export const characterDetailsSlice = createSlice({
   name: 'characterDetails',
   initialState,
-  reducers: {},
+  reducers: {
+    onCharacterEdit (state, action: PayloadAction<ChangeEvent<HTMLInputElement> | undefined>) {
+      const { name, value } = (action.payload?.target) ?? { name: '', value: '' }
+
+      if (state.data != null) {
+        state.data = { ...state.data, [name]: value }
+      }
+    },
+    onCharacterSave (state, action) {
+      console.log('actionSave', action.payload)
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchCharacterById.pending, (state) => {
