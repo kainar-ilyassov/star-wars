@@ -2,19 +2,24 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { type ThunkConfig } from 'app/providers/StoreProvider'
 import { type CharactersPageInfo } from 'pages/CharactersPage'
 
+interface ThunkArgs {
+  search: string
+  page: number
+}
+
 export const fetchCharactersList = createAsyncThunk<
-CharactersPageInfo,
-number,
+CharactersPageInfo, ThunkArgs,
 ThunkConfig<string>
 >(
   'charactersPage/fetchCharactersList',
-  async (pageNumber, thunkApi) => {
+  async ({ search, page }, thunkApi) => {
     const { extra, rejectWithValue } = thunkApi
 
     try {
       const response = await extra.api.get<CharactersPageInfo>('/people', {
         params: {
-          page: pageNumber
+          page,
+          search
         }
       })
 

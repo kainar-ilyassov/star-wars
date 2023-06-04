@@ -1,8 +1,7 @@
-import { type FC, memo, useEffect, useState } from 'react'
-import { Pagination, type PaginationProps, Input } from 'antd'
+import { type ChangeEvent, type FC, memo, useEffect, useState } from 'react'
+import { Pagination, type PaginationProps, Input, Result } from 'antd'
 import { classNames } from 'shared/lib/classNames/classNames'
 import { CharactersList } from 'entities/Character'
-import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch'
 import { useSelector } from 'react-redux'
 import {
   getCharactersList,
@@ -13,16 +12,20 @@ import { fetchCharactersList } from 'pages/CharactersPage/model/services/fetchCh
 import { PageLoader } from 'shared/ui/PageLoader'
 import { PageError } from 'widgets/PageError'
 import cls from './CharactersPage.module.scss'
+import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch'
+import { useDebounce } from 'shared/lib/hooks/useDebounce'
 
 interface CharactersPageProps {
   className?: string
 }
 
-const CURRENT_PAGE = 1
-const { Search } = Input
+const DEFAULT_PAGE = 1
+const DELAY = 500
 
 const CharactersPage: FC<CharactersPageProps> = ({ className }) => {
-  const [currentPage, setCurrentPage] = useState(CURRENT_PAGE)
+  const [page, setPage] = useState(DEFAULT_PAGE)
+  const [search, setSearch] = useState('')
+  const debouncedSearch = useDebounce(search, DELAY)
   const dispatch = useAppDispatch()
 
   const totalCharacters = useSelector(getTotalCharacters)
@@ -31,11 +34,15 @@ const CharactersPage: FC<CharactersPageProps> = ({ className }) => {
   const error = useSelector(getCharactersPageError)
 
   useEffect(() => {
-    dispatch(fetchCharactersList(currentPage) as any)
-  }, [currentPage])
+    dispatch(fetchCharactersList({ search, page }) as any)
+  }, [page, debouncedSearch])
 
   const onChangePage: PaginationProps['onChange'] = (page) => {
-    setCurrentPage(page)
+    setPage(page)
+  }
+
+  const handleSearch = (event: ChangeEvent<HTMLInputElement>): void => {
+    setSearch(event.target.value)
   }
 
   if (error != null) {
@@ -44,27 +51,32 @@ const CharactersPage: FC<CharactersPageProps> = ({ className }) => {
 
   return (
     <div className={classNames(cls.charactersPage, [className])}>
+      <Input
+        value={search}
+        className={classNames(cls.searchInput)}
+        size="large"
+        placeholder="search character"
+        autoFocus
+        onChange={handleSearch}
+      />
+
       {isLoading
         ? <PageLoader/>
-        : (
-          <>
-            <Search
-              className={classNames(cls.searchInput)}
-              size="large"
-              placeholder="search character"
-              enterButton="Search"
-              autoFocus
-            />
-            <CharactersList characters={characters}/>
-            <Pagination
-              current={currentPage}
-              onChange={onChangePage}
-              total={totalCharacters}
-              showSizeChanger={false}
-              className={classNames(cls.pagination)}
-            />
-          </>
+        : (characters?.length === 0
+            ? (<Result title="Character not found"/>)
+            : <>
+              <CharactersList characters={characters}/>
+              <Pagination
+                current={page}
+                onChange={onChangePage}
+                total={totalCharacters}
+                showSizeChanger={false}
+                hideOnSinglePage={true}
+                className={classNames(cls.pagination)}
+              />
+            </>
           )}
+      <div></div>
     </div>
   )
 }

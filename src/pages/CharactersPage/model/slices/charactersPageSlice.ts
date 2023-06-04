@@ -9,7 +9,7 @@ const initialState: CharactersPageSchema = {
 }
 
 export const charactersPageSlice = createSlice({
-  name: 'characterDetails',
+  name: 'charactersPage',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
