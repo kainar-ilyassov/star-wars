@@ -1,9 +1,14 @@
 .charactersPage {
     width: 100%;
     display: flex;
-    padding: 20px;
+    padding: 40px;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: var(--page-bg-color);
+    border-radius: 8px;
+
+    .searchInput {
+        max-width: 400px;
+    }
 }

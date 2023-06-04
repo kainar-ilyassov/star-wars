@@ -1,5 +1,5 @@
 import { type FC, memo, useEffect, useState } from 'react'
-import { Pagination, type PaginationProps } from 'antd'
+import { Pagination, type PaginationProps, Input } from 'antd'
 import { classNames } from 'shared/lib/classNames/classNames'
 import { CharactersList } from 'entities/Character'
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch'
@@ -19,6 +19,7 @@ interface CharactersPageProps {
 }
 
 const CURRENT_PAGE = 1
+const { Search } = Input
 
 const CharactersPage: FC<CharactersPageProps> = ({ className }) => {
   const [currentPage, setCurrentPage] = useState(CURRENT_PAGE)
@@ -47,6 +48,13 @@ const CharactersPage: FC<CharactersPageProps> = ({ className }) => {
 
   return (
     <div className={classNames(cls.charactersPage, [className])}>
+      <Search
+        className={classNames(cls.searchInput)}
+        size="large"
+        placeholder="search character"
+        enterButton="Search"
+        autoFocus
+      />
       <CharactersList characters={characters}/>
       <Pagination
         current={currentPage}

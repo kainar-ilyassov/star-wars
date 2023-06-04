@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { Card } from 'antd'
 import { type Character } from 'entities/Character'
 import { RoutePath } from 'shared/config/routeConfig/routeConfig'
+import { classNames } from 'shared/lib/classNames/classNames'
+import cls from './CharactersListitem.module.scss'
 
 const { Meta } = Card
 
@@ -30,7 +32,7 @@ export const CharactersListItem = memo(({ character, characterId }: CharactersLi
           src={`https://starwars-visualguide.com/assets/img/characters/${characterId}.jpg`}/>
       }
     >
-      <Meta title={character.name} description={`Birth year: ${character.birth_year}`}/>
+      <Meta className={classNames(cls.cardTitle)} title={character.name}/>
     </Card>
   )
 })
