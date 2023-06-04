@@ -84,7 +84,7 @@ export const CharacterDetails = memo(({ className, id }: CharacterDetailsProps) 
         </div>
         <div className={classNames(cls.characterInfo)}>
           {(character != null) && (
-            <Form>
+            <Form layout="horizontal" size="small" labelCol={{ span: 8 }}>
               {renderFormElements(character)}
             </Form>
           )}
