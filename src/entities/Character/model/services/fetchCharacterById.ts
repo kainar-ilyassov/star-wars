@@ -19,6 +19,16 @@ ThunkConfig<string>
         throw new Error()
       }
 
+      const localData = localStorage.getItem('localUsers')
+
+      if (localData !== null) {
+        const localCharacters = JSON.parse(localData)
+        // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+        if (localCharacters[characterId]) {
+          return localCharacters[characterId].data
+        }
+      }
+
       return response.data
     } catch (e) {
       console.log(e)

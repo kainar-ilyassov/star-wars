@@ -1,17 +1,17 @@
 import { memo, type ReactNode, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Image, Input, Form, Button, Breadcrumb } from 'antd'
+import { Image, Input, Form, Button, Breadcrumb, Skeleton } from 'antd'
 import { classNames } from 'shared/lib/classNames/classNames'
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch'
 import { useSelector } from 'react-redux'
 import {
-  getCharacterDetailsData, getCharacterDetailsError
+  getCharacterDetailsData, getCharacterDetailsError, getCharacterDetailsIsLoading
 } from 'entities/Character/model/selectors/characterDetails'
 import { fetchCharacterById } from 'entities/Character/model/services/fetchCharacterById'
 import { PageError } from 'widgets/PageError'
-import cls from './CharacterDetails.module.scss'
 import { type Character, characterDetailsActions } from 'entities/Character'
 import { formLabels } from 'entities/Character/const'
+import cls from './CharacterDetails.module.scss'
 
 interface CharacterDetailsProps {
   className?: string
@@ -24,6 +24,7 @@ const { onCharacterEdit, onCharacterSave } = characterDetailsActions
 export const CharacterDetails = memo(({ className, id }: CharacterDetailsProps) => {
   const dispatch = useAppDispatch()
   const character = useSelector(getCharacterDetailsData)
+  const isLoading = useSelector(getCharacterDetailsIsLoading)
   const error = useSelector(getCharacterDetailsError)
   const [isEditable, setIsEditable] = useState(false)
 
@@ -38,7 +39,10 @@ export const CharacterDetails = memo(({ className, id }: CharacterDetailsProps) 
   }
 
   const handleEdit = (): void => { setIsEditable(!isEditable) }
-  const handleSave = (): void => { dispatch(onCharacterSave(id)) }
+  const handleSave = (): void => {
+    setIsEditable(false)
+    dispatch(onCharacterSave({ id }))
+  }
   const handleCancel = (): void => {
     setIsEditable(false)
     dispatch(fetchCharacterById(id) as any)
@@ -51,13 +55,24 @@ export const CharacterDetails = memo(({ className, id }: CharacterDetailsProps) 
         <Item
           key={`${characterInfo.url}-${index}`}
           label={formLabels[key]}
+          name={key}
+          rules={[{
+            required: true,
+            message: formLabels[key] + ' is required'
+          }]}
         >
-          <Input
-            readOnly={!isEditable}
-            name={key}
-            value={value}
-            onChange={(event) => { dispatch(onCharacterEdit(event)) }}
-          />
+          {isLoading
+            ? (
+              <Skeleton.Input active={true}/>
+              )
+            : (
+              <Input
+                readOnly={!isEditable}
+                name={key}
+                value={value}
+                onChange={(event) => { dispatch(onCharacterEdit(event)) }}
+              />
+              )}
         </Item>
       ))
   }
@@ -84,23 +99,35 @@ export const CharacterDetails = memo(({ className, id }: CharacterDetailsProps) 
         </div>
         <div className={classNames(cls.characterInfo)}>
           {(character != null) && (
-            <Form layout="horizontal" size="small" labelCol={{ span: 8 }}>
+            <Form
+              layout="horizontal"
+              size="small"
+              labelCol={{ span: 8 }}
+              fields={
+                Object.entries(character)
+                  .filter(([key]) => formLabels[key])
+                  .map(([key, value]) => ({ name: key, value }))
+              }
+              onFinish={handleSave}
+            >
               {renderFormElements(character)}
+              <div className={classNames(cls.actionButtons)}>
+                {isEditable
+                  ? (
+                    <>
+                      <Item>
+                        <Button htmlType="submit">Save</Button>
+                      </Item>
+                      <Button onClick={handleCancel}>Cancel</Button>
+                    </>
+                    )
+                  : (
+                    <Button onClick={handleEdit}>Edit</Button>
+                    )}
+              </div>
             </Form>
           )}
         </div>
-      </div>
-      <div className={classNames(cls.actionButtons)}>
-        {isEditable
-          ? (
-            <>
-              <Button onClick={handleSave}>Save</Button>
-              <Button onClick={handleCancel}>Cancel</Button>
-            </>
-            )
-          : (
-            <Button onClick={handleEdit}>Edit</Button>
-            )}
       </div>
     </div>
   )

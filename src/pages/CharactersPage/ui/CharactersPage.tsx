@@ -20,7 +20,7 @@ interface CharactersPageProps {
 }
 
 const DEFAULT_PAGE = 1
-const DELAY = 500
+const DELAY = 1000
 
 const CharactersPage: FC<CharactersPageProps> = ({ className }) => {
   const [page, setPage] = useState(DEFAULT_PAGE)

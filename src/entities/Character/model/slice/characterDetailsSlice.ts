@@ -21,8 +21,16 @@ export const characterDetailsSlice = createSlice({
         state.data = { ...state.data, [name]: value }
       }
     },
-    onCharacterSave (state, action) {
-      console.log('actionSave', action.payload)
+    onCharacterSave (state, action: PayloadAction<{ id: string }>) {
+      const { id: characterId } = action.payload
+      const localUsers = localStorage.getItem('localUsers')
+
+      if (localUsers != null) {
+        const previousLocalUsers = JSON.parse(localUsers)
+        localStorage.setItem('localUsers', JSON.stringify({ ...previousLocalUsers, [characterId]: state }))
+      } else {
+        localStorage.setItem('localUsers', JSON.stringify({ [characterId]: state }))
+      }
     }
   },
   extraReducers: (builder) => {
