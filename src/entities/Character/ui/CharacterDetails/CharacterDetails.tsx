@@ -1,6 +1,6 @@
-import { memo, type ReactNode, useState } from 'react'
+import { memo, type ReactNode, useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { Image, Input, Form, Button, Breadcrumb, Skeleton } from 'antd'
+import { Image, Input, Form, Button, Breadcrumb, Skeleton, type FormInstance } from 'antd'
 import { classNames } from 'shared/lib/classNames/classNames'
 import { PageError } from 'widgets/PageError'
 import { fetchCharacterById } from 'entities/Character/model/services/fetchCharacterById'
@@ -20,6 +20,7 @@ const { onCharacterEdit, onCharacterSave } = characterDetailsActions
 export const CharacterDetails = memo(({ className, id }: CharacterDetailsProps) => {
   const { data: character, isLoading, error, dispatch } = useCharacterInfo(id)
   const [isEditable, setIsEditable] = useState(false)
+  const formRef = useRef<FormInstance | null>(null)
 
   if (error) {
     return (
@@ -34,6 +35,7 @@ export const CharacterDetails = memo(({ className, id }: CharacterDetailsProps) 
   }
   const handleCancel = (): void => {
     setIsEditable(false)
+    formRef.current?.resetFields()
     dispatch(fetchCharacterById(id) as any)
   }
 
@@ -42,9 +44,9 @@ export const CharacterDetails = memo(({ className, id }: CharacterDetailsProps) 
       .filter(([key]) => formLabels[key])
       .map(([key, value], index) => (
         <Item
-          key={`${characterInfo.url}-${index}`}
-          label={formLabels[key]}
           name={key}
+          label={formLabels[key]}
+          key={`${characterInfo.url}-${index}`}
           rules={[{
             required: true,
             message: formLabels[key] + ' is required'
@@ -56,9 +58,9 @@ export const CharacterDetails = memo(({ className, id }: CharacterDetailsProps) 
               )
             : (
               <Input
-                readOnly={!isEditable}
                 name={key}
                 value={value}
+                readOnly={!isEditable}
                 onChange={(event) => { dispatch(onCharacterEdit(event)) }}
               />
               )}
@@ -89,15 +91,16 @@ export const CharacterDetails = memo(({ className, id }: CharacterDetailsProps) 
         <div className={classNames(cls.characterInfo)}>
           {(character != null) && (
             <Form
-              layout="horizontal"
               size="small"
+              ref={formRef}
+              layout="horizontal"
+              onFinish={handleSave}
               labelCol={{ span: 8 }}
               fields={
                 Object.entries(character)
                   .filter(([key]) => formLabels[key])
                   .map(([key, value]) => ({ name: key, value }))
               }
-              onFinish={handleSave}
             >
               {renderFormElements(character)}
               <div className={classNames(cls.actionButtons)}>
