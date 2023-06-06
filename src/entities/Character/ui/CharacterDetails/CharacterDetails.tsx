@@ -1,14 +1,10 @@
-import { memo, type ReactNode, useEffect, useState } from 'react'
+import { memo, type ReactNode, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Image, Input, Form, Button, Breadcrumb, Skeleton } from 'antd'
 import { classNames } from 'shared/lib/classNames/classNames'
-import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch'
-import { useSelector } from 'react-redux'
-import {
-  getCharacterDetailsData, getCharacterDetailsError, getCharacterDetailsIsLoading
-} from 'entities/Character/model/selectors/characterDetails'
-import { fetchCharacterById } from 'entities/Character/model/services/fetchCharacterById'
 import { PageError } from 'widgets/PageError'
+import { fetchCharacterById } from 'entities/Character/model/services/fetchCharacterById'
+import { useCharacterInfo } from 'entities/Character/hooks/useCharacterInfo'
 import { type Character, characterDetailsActions } from 'entities/Character'
 import { formLabels } from 'entities/Character/const'
 import cls from './CharacterDetails.module.scss'
@@ -22,17 +18,10 @@ const { Item } = Form
 const { onCharacterEdit, onCharacterSave } = characterDetailsActions
 
 export const CharacterDetails = memo(({ className, id }: CharacterDetailsProps) => {
-  const dispatch = useAppDispatch()
-  const character = useSelector(getCharacterDetailsData)
-  const isLoading = useSelector(getCharacterDetailsIsLoading)
-  const error = useSelector(getCharacterDetailsError)
+  const { data: character, isLoading, error, dispatch } = useCharacterInfo(id)
   const [isEditable, setIsEditable] = useState(false)
 
-  useEffect(() => {
-    dispatch(fetchCharacterById(id) as any)
-  }, [])
-
-  if (error !== null && error !== undefined) {
+  if (error) {
     return (
       <PageError/>
     )

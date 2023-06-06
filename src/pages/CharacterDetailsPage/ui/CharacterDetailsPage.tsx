@@ -12,7 +12,7 @@ interface CharacterDetailsPageProps {
 const CharacterDetailsPage: FC<CharacterDetailsPageProps> = ({ className }) => {
   const { id } = useParams<{ id: string }>()
 
-  if (id == null) {
+  if (!id) {
     return (<NotFoundPage/>)
   }
 

@@ -14,7 +14,11 @@ export const CharactersList = memo(({ className, characters }: CharactersListPro
     const characterId = urlParts[urlParts.length - 2]
 
     return (
-      <CharactersListItem key={character.url} character={character} characterId={characterId}/>
+      <CharactersListItem
+        key={character.url}
+        character={character}
+        characterId={characterId}
+      />
     )
   }
 
