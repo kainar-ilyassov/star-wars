@@ -1,7 +1,6 @@
 type FormLabels = Record<string, string>
 
 export const formLabels: FormLabels = {
-  name: 'Name',
   height: 'Height',
   mass: 'Mass',
   hair_color: 'Hair Color',
